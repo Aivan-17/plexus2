@@ -1,67 +1,82 @@
 <template>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <title>Bienvenido a Laboratorios Plexus</title>
-  </head>
-  <NavbarComponentVue />
+  
   <body>
+
+    <div class="container"   v-if="estadoServicio==true">
+        <h1>Sistema de Fichas</h1>
+        <input type="text" placeholder="Ingrese su nombre" v-model="fichaRegistrar.nombre">
+        <br>
+        <button type="button" @click="setTipo('Normal')"  >Normal</button>
+        <button type="button"  @click="setTipo('Preferencial')" >Preferencial</button>
+    </div>
+
+
     <div class="background-container">
-      <img src="../assets/bg-plexus.jpg" alt="" />
+      <img src="../assets/bg-services-plexus.jpg" alt="" />
     </div>
-    <div class="services">
-      <main class="form-signin">
-        <h1 class="h3">REGISTRO NUEVO PACIENTE</h1>
 
-        <div id="form">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              placeholder="Raul Fernández"
-              required
-            />
-            <label for="floatingInput">Nombre Completo</label>
-          </div>
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingPassword"
-              placeholder="6787645"
-              required
-            />
-            <label for="floatingPassword">Carnet de Identidad</label>
-          </div>
 
-          <button class="w-100 btn btn-lg" type="submit">
-            Registro Regular
-          </button>
-          <button
-            class="w-100 btn btn-lg"
-            type="submit"
-            style="margin-top: 1vh"
-          >
-            Registro Preferencial
-          </button>
+
+
+
+    <div class="services" v-if="estadoSucces==true" @click="reinicio()">
+      <div class="notification">
+        <div class="tittle-text">
+          <h1>Gracias, en un momento te atenderemos</h1>
         </div>
-        <p class="copyright">
-          Todos los derechos reservados &copy; Laboratiorios Plexus 2024
-        </p>
-      </main>
+        <div class="logo-img"><img src="../assets/plexus.png" alt="" /></div>
+      </div>
     </div>
-  </body>
+
+
+
+
+
+    <div class="services" v-if="estadoServicio==false">
+      <div class="buttons">
+
+        <div class="button-square">
+          <div class="circle-button" @click="setServicio('Toma de Muestra')">
+            <img src="../assets/tubo-de-ensayo.png" alt="" />
+          </div>
+          <div class="description-service">
+            <h1>TOMA DE MUESTRA</h1>
+            <h4>Toma de muestras para laboratorio</h4>
+          </div>
+        </div>
+
+        <div class="button-square">
+          <div class="circle-button"  @click="setServicio('Muestra Pendiente')">
+            <img src="../assets/orina-oscura.png" alt="" />
+          </div>
+          <div class="description-service">
+            <h1>MUESTRA PENDIENTE</h1>
+            <h4>Entrega de muestra pendiente</h4>
+          </div>
+        </div>
+
+        <div class="button-square">
+          <div class="circle-button"   @click="setServicio('Consulta')">
+            <img src="../assets/consulta.png" alt="" />
+          </div>
+          <div class="description-service">
+            <h1>CONSULTA</h1>
+            <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+</body>
+
+
+
+
+
   <div>
     <!--<SuccessfulModalVue :visible="modalVisible" @cerrar-modal="cerrarModal" />
     <ErrorModal :visible="modalErrorVisible" @cerrar-modal="cerrarModal" />
@@ -75,16 +90,67 @@
 </template>
 
 <script>
-import NavbarComponentVue from "@/components/NavbarComponent.vue";
+import axios from "axios";
 export default {
-  setup() {
-    return {};
+  
+  
+
+  methods: {
+    reinicio(){
+      this.estadoServicio = true;
+      this.estadoSucces = false;
+      this.fichaRegistrar.nombre = "";
+      this.fichaRegistrar.tipo = "";
+      this.fichaRegistrar.servicio = "";
+    },
+    setTipo(aux){
+      this.fichaRegistrar.tipo = aux;
+      this.estadoServicio = false;
+    },
+    async setServicio(aux){
+      this.fichaRegistrar.servicio = aux;
+      await this.postFicha();
+
+
+
+    } ,
+
+    async postFicha(){
+      await axios.post('http://localhost:8080/fichas/agregar', this.fichaRegistrar)
+      .then(response => {
+        console.log(response.status)
+        if(response.status === 200){
+          this.estadoSucces = true;
+        }else{
+          alert("Error al registrar la ficha");
+          this.reinicio();
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        alert("Error al registrar la ficha");
+        this.reinicio();
+      })
+      
+    }
+
+    
   },
-  components: {
-    NavbarComponentVue,
-  },
+
+
+
   data() {
-    return {};
+    return {
+      fichaRegistrar: {
+          nombre: "",
+          tipo: "",
+          servicio: ""
+      },
+      estadoServicio: true,
+      estadoSucces: false,
+
+      
+    };
   },
 };
 /**
@@ -335,6 +401,75 @@ export default {
 }; */
 </script>
 <style scoped>
+
+
+
+.notification {
+  border-radius: 10px;
+  padding: 20px;
+  width: 1000px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+  position: relative;
+  animation: show 5s ease-in-out;
+}
+
+.tittle-text {
+  color: var(--primary-color-dark);
+  margin: 40px 0;
+}
+
+.tittle-text h1 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.logo-img {
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+}
+
+.logo-img img {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.5);
+}
+
+.container {
+    text-align: center;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #2196f3; /* Azul */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #1565c0; /* Azul oscuro al pasar el mouse */
+}
+
+
+
 .background-container {
   position: absolute;
   top: 0;
@@ -348,9 +483,9 @@ export default {
   width: 100%;
   height: 110vh;
   object-fit: cover;
-  filter: blur(5px);
+  filter: blur(10px);
   /**  
- */
+   */
 }
 :root {
   --primary-color: rgb(16, 118, 173);
@@ -363,85 +498,74 @@ export default {
   height: 100vh;
 }
 
-/**FORM STYLES */
-
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-.form-signin h1 {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
-  margin-top: 0px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-}
-.form-signin #form {
-  padding: 15px;
-}
-.form-signin #form .btn {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
-  color: #fff;
-}
-.form-signin #form .btn:hover,
-.form-signin #form .btn:focus {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
-}
-.form-signin #form .form-control:focus {
-  border-color: #ced4da;
-  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
-}
-.form-signin .copyright {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.65);
-}
-.form-signin .form-control {
-  background: rgba(255, 255, 255, 0.9);
-}
-.form-signin .form-check {
+.buttons {
   display: flex;
+  justify-content: center;
   align-items: center;
-  color: rgba(255, 255, 255, 0.65);
+  flex-direction: row;
 }
-.form-signin .form-check label {
-  font-size: 0.9em;
+
+.button-square {
+  width: 300px;
+  height: 450px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 1%;
 }
-.form-signin .form-check input {
-  margin-right: 0.5em;
+
+.button-square:hover {
+  transform: scale(1.1);
 }
-.form-signin .form-check input:checked {
-  background-color: #9ce060;
-  border-color: #81c63f;
+
+.circle-button {
+  width: 100%;
+  height: 65%;
+  background-color: var(--primary-color-dark);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 10px 0px var(--primary-color-dark);
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 7%;
 }
-.form-signin .form-floating:focus-within {
-  z-index: 2;
+
+.circle-button img {
+  width: auto;
+  height: 80%;
+  object-fit: cover;
+  padding: 5%;
 }
-.form-signin input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+
+.description-service {
+  width: 100%;
+  height: 35%;
+  padding: 1% 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.form-signin input[type="text"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+
+.description-service h1 {
+  font-size: 1.7rem;
+  color: var(--primary-color-dark);
+  text-align: center;
+  margin-bottom: 1vh;
+  font-weight: 600;
 }
+
+.description-service h4 {
+  font-size: 1.2rem;
+  color: var(--primary-color-dark);
+  text-align: center;
+}
+
+
+
+
+
 </style>

@@ -1,5 +1,4 @@
 <template>
-  <NavbarComponentVue />
 
   <div
     class="say"
@@ -21,10 +20,7 @@
         align-items: center;
       "
     >
-      <h1>Bienvenido: {{ this.usuarioActual.nombre }}</h1>
-      <h4 style="margin-top: 0.4rem">
-        NO SALGA DE ESTA PANTALLA PARA MANTENER SESIÓN COMO ADMINISTRADOR
-      </h4>
+     
     </div>
     <div class="baby-register" @click="actualizarTabla">
       <button class="button2">Actualizar Tabla</button>
@@ -36,53 +32,43 @@
         <thead>
           <tr>
             <th>
-              <h1>#F</h1>
-            </th>
-            <th>
-              <h1>C.I.</h1>
-            </th>
-            <th>
               <h1>Nombre</h1>
             </th>
             <th>
-              <h1>Fecha Ingreso</h1>
+              <h1>Tipo</h1>
             </th>
-
             <th>
               <h1>Servicio</h1>
             </th>
             <th>
-              <h1>Estado</h1>
+              <h1>Opciones</h1>
             </th>
-            <th>
-              <h1>Acciones</h1>
-            </th>
+
+            
           </tr>
         </thead>
-        <tbody>
+         <tbody>
           <tr
-            v-for="ficha in this.fichasPendientes"
-            :key="ficha.idFicha"
-            :id="ficha.idFicha"
-            :style="{ 'background-color': getColorByEstado(ficha.estado) }"
+            v-for="ficha in listFichas"
+            :key="ficha.nombre"
+            :id="ficha.nombre"
+            :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
           >
-            <td>{{ ficha.idFicha }}</td>
-            <td>{{ ficha.persona.ci }}</td>
-            <td>{{ ficha.persona.nombre }}</td>
-            <td>{{ ficha.fingreso.slice(0, 19) }}</td>
+            <td>{{ ficha.nombre }}</td>
+            <td>{{ ficha.tipo }}</td>
             <td>{{ ficha.servicio }}</td>
-            <td>{{ ficha.estado }}</td>
+         
             <td>
               <button
                 class="btn btn-primary"
                 style="background-color: rgb(238, 14, 14)"
-                @click="updateFichaAbandono(ficha.idFicha, ficha)"
+                @click="updateFichaAbandono(ficha.nombre, ficha)"
               >
                 Abandono
               </button>
               <button
                 class="btn btn-primary"
-                @click="updateFichaAtender(ficha.idFicha, ficha)"
+                @click="updateFichaAtender(ficha.nombre, ficha)"
               >
                 Atender
               </button>
@@ -99,17 +85,103 @@
   />-->
 </template>
 <script>
-import NavbarComponentVue from "@/components/NavbarComponent.vue";
+import axios from "axios";
 export default {
   setup() {
     return {};
   },
-  components: {
-    NavbarComponentVue,
-  },
+
   data() {
-    return {};
+    return {
+
+      listFichas: [],
+
+    };
   },
+
+  methods: {
+    getColorByEstado(tipo) {
+      switch (tipo) {
+        case "Normal":
+          return "white";
+        case "Preferencial":
+          return "#ffffcc";
+        case "Atendido":
+          return "#ccffcc";
+        default:
+          return "white";
+      }
+    },
+    async actualizarTabla() {
+      this.listFichasAux= this.listFichas;
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+
+
+      //if there is a new ficha, then send a notification by the browser
+      
+      if(this.listFichasAux.length < this.listFichas.length){
+        console.log("hay una nueva ficha");
+        var notification = new Notification("Nueva ficha", {
+          body: "Hay una nueva ficha en espera",
+        });
+      }
+
+
+      console.log(notification);
+
+
+
+
+    },
+
+    async updateFichaAbandono(idFicha, ficha) {
+      console.log(ficha);
+      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      alert("Ficha abandonada");
+
+
+
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+
+    },
+
+
+    async updateFichaAtender(idFicha, ficha) {
+      console.log(ficha);
+      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      alert("Ficha atendida");
+
+
+
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+    }
+
+
+  },
+
+
+  async mounted() {
+    this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+    this.listFichas = this.listFichas.data;
+
+    
+
+
+
+    console.log(this.listFichas);
+
+
+    this.intervalId = setInterval(() => {
+      this.actualizarTabla();
+    }, 10000);
+  },
+
+
+
+
 };
 
 /**import StateModalVue from "@/components/modals/StateModal.vue";

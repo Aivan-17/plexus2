@@ -1,5 +1,5 @@
 <template>
-  <NavbarComponentVue />
+
   <div
     class="say"
     style="
@@ -19,7 +19,9 @@
         justify-content: center;
         align-items: center;
       "
-    ></div>
+    >
+     
+    </div>
     <div class="baby-register" @click="actualizarTabla">
       <button class="button2">Actualizar Tabla</button>
     </div>
@@ -30,81 +32,138 @@
         <thead>
           <tr>
             <th>
-              <h1>#</h1>
-            </th>
-            <th>
-              <h1>C.I.</h1>
-            </th>
-            <th>
               <h1>Nombre</h1>
             </th>
             <th>
-              <h1>Fecha Ingreso</h1>
-            </th>
-            <th>
-              <h1>Fecha Atención</h1>
+              <h1>Tipo</h1>
             </th>
             <th>
               <h1>Servicio</h1>
             </th>
             <th>
-              <h1>Estado</h1>
+              <h1>Opciones</h1>
             </th>
-            <th>
-              <h1>Frontend</h1>
-            </th>
+
+            
           </tr>
         </thead>
-        <tbody>
+         <tbody>
           <tr
-            v-for="ficha in this.fichasTotales"
-            :key="ficha.idFicha"
-            :id="ficha.idFicha"
-            :style="{ 'background-color': getColorByEstado(ficha.estado) }"
+            v-for="ficha in listFichas"
+            :key="ficha.nombre"
+            :id="ficha.nombre"
+            :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
           >
-            <td>{{ ficha.idFicha }}</td>
-            <td>{{ ficha.persona.ci }}</td>
-            <td>{{ ficha.persona.nombre }}</td>
-            <td>{{ ficha.fingreso.slice(0, 19) }}</td>
-            <td>{{ ficha.fllamada.slice(0, 19) }}</td>
+            <td>{{ ficha.nombre }}</td>
+            <td>{{ ficha.tipo }}</td>
             <td>{{ ficha.servicio }}</td>
-            <td>{{ ficha.estado }}</td>
-            <td>{{ ficha.personaPersonal.nombre }}</td>
+         
+            <td>
+              <button
+                class="btn btn-primary"
+                style="background-color: rgb(238, 14, 14)"
+                @click="updateFichaAbandono(ficha.nombre, ficha)"
+              >
+                Abandono
+              </button>
+              <button
+                class="btn btn-primary"
+                @click="updateFichaAtender(ficha.nombre, ficha)"
+              >
+                Atender
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="baby-register">
-      <button
-        class="button2"
-        @click="unclickedBabyRegister"
-        v-if="babyRegister"
-      >
-        Registrar un Paciente
-      </button>
-    </div>
   </body>
-  <div>
-    <StateModalVue :visible="modalVisible" @cerrar-modal="cerrarModal" />
-  </div>
-  <Loading
+  <!--<Loading
     v-model:active="isLoading"
     :can-cancel="false"
     :is-full-page="fullPage"
-  />
+  />-->
 </template>
 <script>
-import NavbarComponentVue from "@/components/NavbarComponent.vue";
+import axios from "axios";
 export default {
   setup() {
     return {};
   },
-  components: {
-    NavbarComponentVue,
-  },
+ 
   data() {
-    return {};
+    return {
+
+      listFichas: [],
+
+    };
   },
+
+  methods: {
+    getColorByEstado(tipo) {
+      switch (tipo) {
+        case "Normal":
+          return "white";
+        case "Preferencial":
+          return "#ffffcc";
+        case "Atendido":
+          return "#ccffcc";
+        default:
+          return "white";
+      }
+    },
+    async actualizarTabla() {
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+    },
+
+    async updateFichaAbandono(idFicha, ficha) {
+      console.log(ficha);
+      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      alert("Ficha abandonada");
+
+
+
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+
+    },
+
+
+    async updateFichaAtender(idFicha, ficha) {
+      console.log(ficha);
+      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      alert("Ficha atendida");
+
+
+
+      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = this.listFichas.data;
+    }
+
+
+  },
+
+
+  async mounted() {
+    this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+    this.listFichas = this.listFichas.data;
+
+    
+
+
+
+    console.log(this.listFichas);
+
+
+    this.intervalId = setInterval(() => {
+      this.actualizarTabla();
+    }, 10000);
+  },
+
+
+
+
 };
 
 /**import StateModalVue from "@/components/modals/StateModal.vue";
@@ -117,6 +176,7 @@ export default {
   setup() {
     const fichasStore = useFichasStore();
     const personasStore = usePersonasStore();
+
     return {
       fichasStore,
       personasStore,
@@ -127,23 +187,38 @@ export default {
     StateModalVue,
     Loading,
   },
+
   data() {
     return {
       modalVisible: false,
-      fichasTotales: [],
+      fichas: [],
+      fichasPendientes: [],
+      idUsuario: this.$route.params.id,
+      usuarioActual: {},
+      fichaACambiar: {
+        idFicha: null,
+        estado: null,
+        servicio: null,
+        fingreso: null,
+        fllamada: null,
+        idPaciente: null,
+        idPersonal: null,
+      },
       isLoading: false,
       fullPage: true,
     };
   },
+
   async mounted() {
     this.isLoading = true;
+    this.fichasPendientes = await this.fichasStore.getFichasEnProceso();
+    //console.log("fichas pendientes");
+    //console.log(this.fichasPendientes);
 
-    this.fichasTotales = await this.fichasStore.getFichasTotales();
-    //console.log("fichas totales");
-    //console.log(this.fichasTotales);
+    //console.log(this.idUsuario);
+    this.usuarioActual = await this.personasStore.getPersona(this.idUsuario);
     //console.log(this.usuarioActual);
     this.isLoading = false;
-
     this.intervalId = setInterval(() => {
       this.actualizarTabla();
     }, 10000);
@@ -152,14 +227,48 @@ export default {
     clearInterval(this.intervalId);
   },
   methods: {
-    mostrarModal() {
-      this.modalVisible = true;
+    async updateFichaAbandono(idFicha, ficha) {
+      //console.log("updateFichaAbandono");
+      this.isLoading = true;
+
+      this.fichaACambiar.idFicha = idFicha;
+      this.fichaACambiar.estado = "Abandono";
+      this.fichaACambiar.servicio = ficha.servicio;
+      this.fichaACambiar.fingreso = ficha.fingreso;
+      this.fichaACambiar.fllamada = ficha.fllamada;
+      this.fichaACambiar.idPaciente = ficha.persona.idPersona;
+      const idUsuario = parseInt(this.idUsuario);
+
+      this.fichaACambiar.idPersonal = idUsuario;
+
+      //console.log(this.fichaACambiar);
+
+      await this.fichasStore.updateFicha(this.fichaACambiar);
+      this.fichasPendientes = await this.fichasStore.getFichasEnProceso();
+      //console.log(this.fichasPendientes);
+      this.isLoading = false;
     },
-    cerrarModal() {
-      this.modalVisible = false;
-    },
-    async actualizarTabla() {
-      this.fichasTotales = await this.fichasStore.getFichasTotales();
+
+    async updateFichaAtender(idFicha, ficha) {
+      //console.log("updateFichaAtender");
+      this.isLoading = true;
+
+      this.fichaACambiar.idFicha = idFicha;
+      this.fichaACambiar.estado = "Atendido";
+      this.fichaACambiar.servicio = ficha.servicio;
+      this.fichaACambiar.fingreso = ficha.fingreso;
+      this.fichaACambiar.fllamada = new Date().toISOString().slice(0, 19);
+      this.fichaACambiar.idPaciente = ficha.persona.idPersona;
+      const idUsuario = parseInt(this.idUsuario);
+
+      this.fichaACambiar.idPersonal = idUsuario;
+
+      //console.log(this.fichaACambiar);
+
+      await this.fichasStore.updateFicha(this.fichaACambiar);
+      this.fichasPendientes = await this.fichasStore.getFichasEnProceso();
+      //console.log(this.fichasPendientes);
+      this.isLoading = false;
     },
     getColorByEstado(estado) {
       switch (estado) {
@@ -172,6 +281,15 @@ export default {
         default:
           return "white";
       }
+    },
+    async actualizarTabla() {
+      this.fichasPendientes = await this.fichasStore.getFichasEnProceso();
+    },
+    mostrarModal() {
+      this.modalVisible = true;
+    },
+    cerrarModal() {
+      this.modalVisible = false;
     },
   },
 }; */
