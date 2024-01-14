@@ -37,14 +37,6 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  max-width: 95vw;
-  margin: auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 nav {
   padding: 2rem 1rem;
   display: flex;
