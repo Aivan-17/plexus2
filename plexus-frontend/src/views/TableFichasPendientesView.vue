@@ -22,6 +22,15 @@
     >
      
     </div>
+    <div class="baby-register"  >
+      <h2>Tabla de Fichas</h2>
+
+    </div>
+    <div class="baby-register"  @click="borrarFichas()">
+
+      <button class="button2" style="background-color: #c82b2b;">Borrar todas las fichas</button>
+    </div>
+
     <div class="baby-register" @click="actualizarTabla">
       <button class="button2">Actualizar Tabla</button>
     </div>
@@ -100,6 +109,29 @@ export default {
   },
 
   methods: {
+    async borrarFichas(){
+      //ask for a input text confirmation
+      try {
+        var input = prompt("Escriba 'borrar' para confirmar el borrado de todas las fichas", "");
+      if(input == "borrar"){
+        await axios.delete("http://localhost:8080/fichas/borrar-todas");
+        alert("Todas las fichas han sido borradas");
+        this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+        this.listFichas = this.listFichas.data;
+      }else{
+        alert("No se ha borrado ninguna ficha");
+      }
+      } catch (error) {
+        alert("Problema en el borrado de fichas");
+      }
+
+
+      
+      
+    },
+
+
+
     getColorByEstado(tipo) {
       switch (tipo) {
         case "Normal":

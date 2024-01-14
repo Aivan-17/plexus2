@@ -22,9 +22,19 @@
     >
      
     </div>
+    <div class="baby-register"  >
+      <h2>Tabla de Toma de Muestras</h2>
+
+    </div>
+    <div class="baby-register"  @click="borrarFichas()">
+
+      <button class="button2" style="background-color: #c82b2b;">Borrar todas las fichas</button>
+    </div>
+
     <div class="baby-register" @click="actualizarTabla">
       <button class="button2">Actualizar Tabla</button>
     </div>
+    
   </div>
   <body>
     <div class="cuerpo">
@@ -49,12 +59,13 @@
         </thead>
          <tbody>
           <tr
-            v-for="ficha in listFichas"
+            v-for="ficha in fichasTomaMuestra"
             :key="ficha.nombre"
             :id="ficha.nombre"
             :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
+            
           >
-            <td>{{ ficha.nombre }}</td>
+            <td >{{ ficha.nombre }}</td>
             <td>{{ ficha.tipo }}</td>
             <td>{{ ficha.servicio }}</td>
          
@@ -90,6 +101,14 @@ export default {
   setup() {
     return {};
   },
+  //computed to only mantein fichas that have ficha.servicio== 'Toma de Muestra'
+  computed: {
+    fichasTomaMuestra() {
+      return this.listFichas.filter((ficha) => {
+        return ficha.servicio == "Toma de Muestra";
+      });
+    },
+  },
  
   data() {
     return {
@@ -100,6 +119,27 @@ export default {
   },
 
   methods: {
+    async borrarFichas(){
+      //ask for a input text confirmation
+      try {
+        var input = prompt("Escriba 'borrar' para confirmar el borrado de todas las fichas", "");
+      if(input == "borrar"){
+        await axios.delete("http://localhost:8080/fichas/borrar-todas");
+        alert("Todas las fichas han sido borradas");
+        this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+        this.listFichas = this.listFichas.data;
+      }else{
+        alert("No se ha borrado ninguna ficha");
+      }
+      } catch (error) {
+        alert("Problema en el borrado de fichas");
+      }
+
+
+      
+      
+    },
+
     getColorByEstado(tipo) {
       switch (tipo) {
         case "Normal":

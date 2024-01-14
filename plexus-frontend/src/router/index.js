@@ -34,7 +34,7 @@ const router = createRouter({
       component: TableFichasPendientesView,
     },
     {
-      path: "/table-que",
+      path: "/table-toma-muestras",
       name: "table-que",
       component: TableQueView,
     },
