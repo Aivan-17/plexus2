@@ -1,25 +1,53 @@
 <template>
-  
   <body>
-
-    <div class="container"   v-if="estadoServicio==true">
-        <h1>Sistema de Fichas</h1>
-        <input type="text" placeholder="Ingrese su nombre" v-model="fichaRegistrar.nombre">
-        <br>
-        <button type="button" @click="setTipo('Normal')"  >Normal</button>
-        <button type="button"  @click="setTipo('Preferencial')" >Preferencial</button>
+    <div class="container" v-if="estadoServicio == true">
+      <h1 style="font-size: 3rem; font-weight: 700">SISTEMA DE FICHAS</h1>
+      <!--<input
+        type="text"
+        placeholder="Ingrese su nombre"
+        v-model="fichaRegistrar.nombre"
+      />-->
+      <br />
+      <input
+        type="text"
+        autocomplete="off"
+        name="text"
+        class="input"
+        placeholder="Ingrese su nombre"
+        v-model="fichaRegistrar.nombre"
+      />
+      <div class="buttons-collection">
+        <div class="normal-button">
+          <div class="imagen">
+            <img src="../assets/normal-patient.png" alt="" />
+          </div>
+          <button
+            type="button"
+            @click="setTipo('Normal')"
+            style="font-weight: 800; font-size: 2.5rem"
+          >
+            NORMAL
+          </button>
+        </div>
+        <br />
+        <div class="preferential-button">
+          <div class="imagen"><img src="../assets/patient.png" alt="" /></div>
+          <button
+            type="button"
+            @click="setTipo('Preferencial')"
+            style="font-weight: 800; font-size: 2.5rem"
+          >
+            PREFERENCIAL
+          </button>
+        </div>
+      </div>
     </div>
-
 
     <div class="background-container">
       <img src="../assets/bg-services-plexus.jpg" alt="" />
     </div>
 
-
-
-
-
-    <div class="services" v-if="estadoSucces==true" @click="reinicio()">
+    <div class="services" v-if="estadoSucces == true" @click="reinicio()">
       <div class="notification">
         <div class="tittle-text">
           <h1>Gracias, en un momento te atenderemos</h1>
@@ -28,13 +56,8 @@
       </div>
     </div>
 
-
-
-
-
-    <div class="services" v-if="estadoServicio==false">
+    <div class="services" v-if="estadoServicio == false">
       <div class="buttons">
-
         <div class="button-square">
           <div class="circle-button" @click="setServicio('Toma de Muestra')">
             <img src="../assets/tubo-de-ensayo.png" alt="" />
@@ -46,7 +69,7 @@
         </div>
 
         <div class="button-square">
-          <div class="circle-button"  @click="setServicio('Muestra Pendiente')">
+          <div class="circle-button" @click="setServicio('Muestra Pendiente')">
             <img src="../assets/orina-oscura.png" alt="" />
           </div>
           <div class="description-service">
@@ -56,7 +79,7 @@
         </div>
 
         <div class="button-square">
-          <div class="circle-button"   @click="setServicio('Consulta')">
+          <div class="circle-button" @click="setServicio('Consulta')">
             <img src="../assets/consulta.png" alt="" />
           </div>
           <div class="description-service">
@@ -66,16 +89,7 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-</body>
-
-
-
-
+  </body>
 
   <div>
     <!--<SuccessfulModalVue :visible="modalVisible" @cerrar-modal="cerrarModal" />
@@ -92,64 +106,52 @@
 <script>
 import axios from "axios";
 export default {
-  
-  
-
   methods: {
-    reinicio(){
+    reinicio() {
       this.estadoServicio = true;
       this.estadoSucces = false;
       this.fichaRegistrar.nombre = "";
       this.fichaRegistrar.tipo = "";
       this.fichaRegistrar.servicio = "";
     },
-    setTipo(aux){
+    setTipo(aux) {
       this.fichaRegistrar.tipo = aux;
       this.estadoServicio = false;
     },
-    async setServicio(aux){
+    async setServicio(aux) {
       this.fichaRegistrar.servicio = aux;
       await this.postFicha();
+    },
 
-
-
-    } ,
-
-    async postFicha(){
-      await axios.post('http://localhost:8080/fichas/agregar', this.fichaRegistrar)
-      .then(response => {
-        console.log(response.status)
-        if(response.status === 200){
-          this.estadoSucces = true;
-        }else{
+    async postFicha() {
+      await axios
+        .post("http://localhost:8080/fichas/agregar", this.fichaRegistrar)
+        .then((response) => {
+          console.log(response.status);
+          if (response.status === 200) {
+            this.estadoSucces = true;
+          } else {
+            alert("Error al registrar la ficha");
+            this.reinicio();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
           alert("Error al registrar la ficha");
           this.reinicio();
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        alert("Error al registrar la ficha");
-        this.reinicio();
-      })
-      
-    }
-
-    
+        });
+    },
   },
-
-
 
   data() {
     return {
       fichaRegistrar: {
-          nombre: "",
-          tipo: "",
-          servicio: ""
+        nombre: "",
+        tipo: "",
+        servicio: "",
       },
       estadoServicio: true,
       estadoSucces: false,
-
-      
     };
   },
 };
@@ -401,8 +403,28 @@ export default {
 }; */
 </script>
 <style scoped>
+/**input css */
 
+.input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  height: 100px;
+  padding: 1em;
+  background-color: #ccc;
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: 300ms ease-in-out;
+  width: 100%;
+  font-size: 1.5rem;
+}
 
+.input:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+}
+
+/**end input css */
 
 .notification {
   border-radius: 10px;
@@ -444,31 +466,130 @@ export default {
   transform: scale(1.5);
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
 .container {
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  width: 800px;
+  height: 800px;
+  padding: 5%;
+}
+
+.buttons-collection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5%;
+}
+
+.normal-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.normal-button .imagen {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px 0px var(--primary-color-dark);
+  background-color: var(--primary-color-dark);
+}
+
+.normal-button .imagen img {
+  width: 60%;
+  height: 60%;
+  transform: translateX(15%);
+  margin-right: 10px;
+}
+
+.normal-button button {
+  width: 520px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: var(--primary-color-dark);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.preferential-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.preferential-button .imagen {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px 0px var(--primary-color-dark);
+  background-color: var(--primary-color-dark);
+}
+
+.preferential-button .imagen img {
+  width: 60%;
+  height: 60%;
+  transform: translateX(20%);
+  margin-right: 10px;
+}
+
+.preferential-button button {
+  width: 520px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: var(--primary-color-dark);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 input {
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 200px;
-    box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 200px;
+  box-sizing: border-box;
 }
 
 button {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #2196f3; /* Azul */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #2196f3; /* Azul */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
 }
 
 button:hover {
-    background-color: #1565c0; /* Azul oscuro al pasar el mouse */
+  background-color: #1565c0; /* Azul oscuro al pasar el mouse */
 }
-
-
 
 .background-container {
   position: absolute;
@@ -563,9 +684,4 @@ button:hover {
   color: var(--primary-color-dark);
   text-align: center;
 }
-
-
-
-
-
 </style>
