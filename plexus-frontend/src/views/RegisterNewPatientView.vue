@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <div class="services" v-if="estadoServicio == false">
+    <div class="services" v-if="estadoServicio == false && estadoSucces==false">
       <div class="buttons">
         <div class="button-square">
           <div class="circle-button" @click="setServicio('Toma de Muestra')">
