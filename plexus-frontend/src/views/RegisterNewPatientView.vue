@@ -1,12 +1,10 @@
 <template>
-  <body>
+  <body  >
     <div class="container" v-if="estadoServicio == true">
-      <h1 style="font-size: 5rem; color: #fff; font-weight: 700">
-        Bienvenidos
-      </h1>
-      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
-        Registra tu nombre
-      </h1>
+      <h1 style=" font-size: 4rem; font-weight: 300; color: #e6dddd;">Bienvenidos</h1>
+      <br>
+
+      <h1 style=" font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76);">Registra tu nombre</h1>
       <!--<input
         type="text"
         placeholder="Ingrese su nombre"
@@ -21,9 +19,9 @@
         placeholder="Ingrese su nombre"
         v-model="fichaRegistrar.nombre"
       />
-      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
-        Selecciona un tipo de atención
-      </h1>
+      <br>
+      <h1 style=" font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76);">Selecciona un tipo de atención</h1>
+
       <div class="buttons-collection">
         <div class="normal-button">
           <div class="imagen">
@@ -32,9 +30,9 @@
           <button
             type="button"
             @click="setTipo('Normal')"
-            style="font-weight: 800; font-size: 2.5rem"
+            style="font-weight: 400; font-size: 2.5rem; font-family: 'futura'; background-color: #e6dddd; color: rgb(35, 89, 135);"
           >
-            NORMAL
+            Normal
           </button>
         </div>
         <br />
@@ -43,50 +41,52 @@
           <button
             type="button"
             @click="setTipo('Preferencial')"
-            style="font-weight: 800; font-size: 2.5rem"
+            style="font-weight: 400; font-size: 2.5rem; font-family: 'futura'; background-color: #e6dddd; color: rgb(35, 89, 135);"
           >
-            PREFERENCIAL
+            Preferencial
           </button>
         </div>
       </div>
+      <br>
+      <img src="../assets/plexus.png" alt="" />
     </div>
 
     <div class="background-container">
-      <img
-        src="../assets/bg-gracias.png"
-        v-if="estadoServicio == true"
-        alt=""
-      />
-      <img
-        src="../assets/bg-services.png"
-        v-if="estadoServicio == false"
-        alt=""
-      />
+      <img src="../assets/Gracias y Registro-fondo.png" v-if="estadoServicio == true" style="" alt="" />
+      <img src="../assets/Servicios-fondo.png" v-if="estadoServicio == false && estadoSucces == false" style= "filter: blur(1px);" alt="" />
+      <img src="../assets/Gracias y Registro-fondo.png" v-if="estadoSucces == true" style="" alt="" />
+
+
+
     </div>
 
-    <div class="services" v-if="estadoSucces == true" @click="reinicio()">
-      <div class="notification">
+    <div class="services" style="width: 80vw;" v-if="estadoSucces == true" @click="reinicio()">
+      <div class="notification" style="width: auto;">
         <div class="tittle-text">
-          <h1>Gracias, en un momento te atenderemos</h1>
+          <h1 style=" font-size: 4rem; font-weight: 400; color: rgb(231, 235, 238);">Gracias, en un momento te atenderemos</h1>
         </div>
         <div class="logo-img"><img src="../assets/plexus.png" alt="" /></div>
       </div>
     </div>
 
-    <div
-      class="services"
-      v-if="estadoServicio == false && estadoSucces == false"
-    >
-      <h1
-        style="
-          font-size: 3.5rem;
-          margin-bottom: 50px;
-          color: rgb(16, 118, 173);
-          font-weight: 700;
-        "
-      >
-        ¿Qué servicio podemos ofrecerte?
-      </h1>
+
+
+
+    <div style="display: contents;" v-if="estadoServicio == false && estadoSucces == false"  >
+
+      <div class="notification" style="height: 7rem;" >
+        <div class="tittle-text">
+          <h1 style=" font-family: 'Futura'; font-size: 3rem; font-weight: 500; color: rgb(35, 89, 135);">¿Qué servicio podemos ofrecerte?</h1>
+        </div>
+      </div>
+      
+
+
+
+
+      <div class="services" style="height: 60vh;" v-if="estadoServicio == false && estadoSucces == false">
+      
+
       <div class="buttons">
         <div class="button-square">
           <div class="circle-button" @click="setServicio('Toma de Muestra')">
@@ -118,10 +118,23 @@
           </div>
         </div>
       </div>
-      <div class="logo-plexus">
-        <img src="../assets/plexus.png" alt="" />
-      </div>
     </div>
+
+
+
+      <img src="../assets/plexus.png" alt="" />
+
+
+
+
+
+
+      
+    </div>
+
+
+
+   
   </body>
 
   <div>
@@ -148,6 +161,10 @@ export default {
       this.fichaRegistrar.servicio = "";
     },
     setTipo(aux) {
+      if (this.fichaRegistrar.nombre == "") {
+        alert("Ingrese su nombre");
+        return;
+      }
       this.fichaRegistrar.tipo = aux;
       this.estadoServicio = false;
     },
@@ -460,7 +477,8 @@ export default {
   border-radius: 15px;
   height: 100px;
   padding: 1em;
-  background-color: #ccc;
+  
+  background-color: #f3ecec;
   box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
   transition: 300ms ease-in-out;
   width: 100%;
@@ -468,9 +486,9 @@ export default {
 }
 
 .input:focus {
-  background-color: white;
-  transform: scale(1.05);
-  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+  background-color: rgb(240, 229, 229);
+  transform: scale(1.01);
+  box-shadow: 4px 4px 100px #969696, -4px -4px 100px #e4e1e1;
 }
 
 /**end input css */
@@ -632,15 +650,14 @@ input {
 button {
   padding: 10px;
   cursor: pointer;
-  background-color: #2196f3; /* Azul */
   color: #fff;
   border: none;
   border-radius: 5px;
 }
 
 button:hover {
-  background-color: #fff;
-  transform: scale(1.025); /* Azul oscuro al pasar el mouse */
+  transform: scale(1.05);
+
 }
 
 .background-container {
@@ -654,8 +671,9 @@ button:hover {
 
 .background-container img {
   width: 100%;
-  height: 110vh;
+  height: 99.7435%;
   object-fit: cover;
+  filter: blur(0px);
   /**  
    */
 }
