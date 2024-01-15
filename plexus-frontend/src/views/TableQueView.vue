@@ -97,9 +97,15 @@
 </template>
 <script>
 import axios from "axios";
+import { useSound } from '@vueuse/sound'
+import notificationSound from '../assets/audio.mp3'
 export default {
   setup() {
-    return {};
+    const { play } = useSound(notificationSound)
+
+    return {
+      play,
+    }
   },
   //computed to only mantein fichas that have ficha.servicio== 'Toma de Muestra'
   computed: {
@@ -153,8 +159,22 @@ export default {
       }
     },
     async actualizarTabla() {
+      this.listFichasAux= this.listFichas;
       this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
       this.listFichas = this.listFichas.data;
+
+
+      
+      if(this.listFichasAux.length < this.listFichas.length){
+        await this.play();
+      }
+
+
+
+
+
+
+
     },
 
     async updateFichaAbandono(idFicha, ficha) {

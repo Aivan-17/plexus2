@@ -94,10 +94,17 @@
   />-->
 </template>
 <script>
+import { useSound } from '@vueuse/sound'
+import notificationSound from '../assets/audio.mp3'
+
 import axios from "axios";
 export default {
   setup() {
-    return {};
+    const { play } = useSound(notificationSound)
+
+    return {
+      play,
+    }
   },
 
 
@@ -161,17 +168,13 @@ export default {
       this.listFichas = this.listFichas.data;
 
 
-      //if there is a new ficha, then send a notification by the browser
       
       if(this.listFichasAux.length < this.listFichas.length){
-        console.log("hay una nueva ficha");
-        var notification = new Notification("Nueva ficha", {
-          body: "Hay una nueva ficha en espera",
-        });
+        await this.play();
       }
 
 
-      console.log(notification);
+
 
 
 
@@ -219,7 +222,7 @@ export default {
 
     this.intervalId = setInterval(() => {
       this.actualizarTabla();
-    }, 10000);
+    }, 7000);
   },
 
 
