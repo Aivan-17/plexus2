@@ -58,7 +58,7 @@
         </thead>
          <tbody>
           <tr
-            v-for="ficha in listFichas"
+            v-for="ficha in fichasTomaMuestra"
             :key="ficha.nombre"
             :id="ficha.nombre"
             :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
@@ -98,6 +98,17 @@ import axios from "axios";
 export default {
   setup() {
     return {};
+  },
+
+
+  
+
+  computed: {
+    fichasTomaMuestra() {
+      return this.listFichas.filter((ficha) => {
+        return ficha.servicio !== "Toma de Muestra";
+      });
+    },
   },
 
   data() {
