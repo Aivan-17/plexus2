@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="say"
-    style="
-      height: 20vh;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      flex-direction: row;
-      padding: 0 10.35rem;
-    "
-  >
+  <div class="say">
     <div
       class="notes"
       style="
@@ -20,9 +10,7 @@
       "
     ></div>
     <div class="baby-register">
-      <h2 style="font-size: 2.5rem; color: rgb(249, 249, 45)">
-        Tabla de Toma de Muestras
-      </h2>
+      <h2>Tabla de Toma de Muestras</h2>
     </div>
     <div class="baby-register" @click="borrarFichas()">
       <button class="button2" style="background-color: #c82b2b; color: #fff">
@@ -348,18 +336,41 @@ export default {
   --primary-color-dark: rgb(11, 91, 134);
 }
 
+body {
+  min-height: 100vh;
+  height: auto;
+  min-width: 100vw;
+  width: auto;
+}
+
+.say {
+  height: 20vh;
+  max-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  padding: 0 10rem;
+}
+
+.cuerpo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .background-container {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
 .background-container img {
   width: 100%;
-  min-height: 120vh;
+  height: 250vh;
   object-fit: cover;
   /**  
    */
@@ -456,7 +467,12 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 15px 100px;
+  padding: 15px 35px;
+}
+
+.baby-register h2 {
+  font-size: 2.5rem;
+  color: rgb(249, 249, 45);
 }
 
 .button2 {
@@ -526,5 +542,31 @@ export default {
   top: -45%;
   background-color: var(--primary-color-dark);
   transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+@media screen and (max-width: 1300px) {
+  .button2 {
+    display: inline-block;
+    width: 150px;
+    height: 100%;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #090909;
+    padding: 0.45em 1.7em;
+    font-size: 16px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    box-shadow: 3px 3px 6px #c5c5c5, -3px -3px 6px #ffffff;
+  }
+
+  .baby-register {
+    transform: translateX(-35%);
+  }
+  .baby-register h2 {
+    font-size: 2rem;
+  }
 }
 </style>

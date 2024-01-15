@@ -69,7 +69,12 @@
         <div class="tittle-text">
           <h1>Gracias, en un momento te atenderemos</h1>
         </div>
-        <div class="logo-img"><img src="../assets/plexus.png" alt="" /></div>
+        <div class="logo-img">
+          <img
+            src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
+            alt=""
+          />
+        </div>
       </div>
     </div>
 
@@ -87,6 +92,7 @@
       >
         ¿Qué servicio podemos ofrecerte?
       </h1>
+
       <div class="buttons">
         <div class="button-square">
           <div class="circle-button" @click="setServicio('Toma de Muestra')">
@@ -119,7 +125,10 @@
         </div>
       </div>
       <div class="logo-plexus">
-        <img src="../assets/plexus.png" alt="" />
+        <img
+          src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
+          alt=""
+        />
       </div>
     </div>
   </body>
@@ -512,7 +521,6 @@ export default {
 .logo-img img {
   width: 100%;
   height: 100%;
-  transform: scale(1.5);
 }
 
 body {
@@ -689,7 +697,7 @@ button:hover {
 }
 
 .button-square:hover {
-  transform: scale(1.1);
+  transform: scale(1.025);
 }
 
 .circle-button {
@@ -735,5 +743,47 @@ button:hover {
   font-size: 1.2rem;
   color: var(--primary-color-dark);
   text-align: center;
+}
+
+@media screen and (max-width: 1080px) {
+  .circle-button {
+    width: 80%;
+    height: 50%;
+    transform: translateX(10%);
+  }
+  .circle-button img {
+    width: auto;
+    height: 70%;
+  }
+  .description-service h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+    font-weight: 900;
+  }
+
+  .description-service h4 {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .circle-button {
+    width: 80%;
+    height: 50%;
+    transform: translateX(10%);
+  }
+  .circle-button img {
+    width: auto;
+    height: 70%;
+  }
+  .description-service h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+    font-weight: 900;
+  }
+
+  .description-service h4 {
+    font-size: 1rem;
+  }
 }
 </style>
