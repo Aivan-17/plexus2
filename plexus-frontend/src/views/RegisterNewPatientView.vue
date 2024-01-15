@@ -1,10 +1,14 @@
 <template>
-  <body  >
+  <body>
     <div class="container" v-if="estadoServicio == true">
-      <h1 style=" font-size: 4rem; font-weight: 300; color: #e6dddd;">Bienvenidos</h1>
-      <br>
+      <h1 style="font-size: 5rem; font-weight: 600; color: #fff">
+        Bienvenidos
+      </h1>
+      <br />
 
-      <h1 style=" font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76);">Registra tu nombre</h1>
+      <h1 style="font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76)">
+        Registra tu nombre
+      </h1>
       <!--<input
         type="text"
         placeholder="Ingrese su nombre"
@@ -19,8 +23,10 @@
         placeholder="Ingrese su nombre"
         v-model="fichaRegistrar.nombre"
       />
-      <br>
-      <h1 style=" font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76);">Selecciona un tipo de atención</h1>
+      <br />
+      <h1 style="font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76)">
+        Selecciona un tipo de atención
+      </h1>
 
       <div class="buttons-collection">
         <div class="normal-button">
@@ -30,7 +36,12 @@
           <button
             type="button"
             @click="setTipo('Normal')"
-            style="font-weight: 400; font-size: 2.5rem; font-family: 'futura'; background-color: #e6dddd; color: rgb(35, 89, 135);"
+            style="
+              font-weight: 400;
+              font-size: 2.5rem;
+              background-color: #fff;
+              color: rgb(35, 89, 135);
+            "
           >
             Normal
           </button>
@@ -41,100 +52,122 @@
           <button
             type="button"
             @click="setTipo('Preferencial')"
-            style="font-weight: 400; font-size: 2.5rem; font-family: 'futura'; background-color: #e6dddd; color: rgb(35, 89, 135);"
+            style="
+              font-weight: 400;
+              font-size: 2.5rem;
+              background-color: #fff;
+              color: rgb(35, 89, 135);
+            "
           >
             Preferencial
           </button>
         </div>
       </div>
-      <br>
-      <img src="../assets/plexus.png" alt="" />
+      <br />
+      <img src="../assets/logo-blanco-amarillo.png" alt="" />
     </div>
 
     <div class="background-container">
-      <img src="../assets/Gracias y Registro-fondo.png" v-if="estadoServicio == true" style="" alt="" />
-      <img src="../assets/Servicios-fondo.png" v-if="estadoServicio == false && estadoSucces == false" style= "filter: blur(1px);" alt="" />
-      <img src="../assets/Gracias y Registro-fondo.png" v-if="estadoSucces == true" style="" alt="" />
-
-
-
+      <img
+        src="../assets/Gracias y Registro-fondo.png"
+        v-if="estadoServicio == true"
+        style=""
+        alt=""
+      />
+      <img
+        src="../assets/Servicios-fondo.png"
+        v-if="estadoServicio == false && estadoSucces == false"
+        style="filter: blur(1px)"
+        alt=""
+      />
+      <img
+        src="../assets/Gracias y Registro-fondo.png"
+        v-if="estadoSucces == true"
+        style=""
+        alt=""
+      />
     </div>
 
-    <div class="services" style="width: 80vw;" v-if="estadoSucces == true" @click="reinicio()">
-      <div class="notification" style="width: auto;">
+    <div
+      class="services"
+      style="width: 80vw"
+      v-if="estadoSucces == true"
+      @click="reinicio()"
+    >
+      <div class="notification" style="width: auto">
         <div class="tittle-text">
-          <h1 style=" font-size: 4rem; font-weight: 400; color: rgb(231, 235, 238);">Gracias, en un momento te atenderemos</h1>
+          <h1 style="font-size: 4rem; font-weight: 400; color: #fff">
+            Gracias, en un momento te atenderemos
+          </h1>
         </div>
-        <div class="logo-img"><img src="../assets/plexus.png" alt="" /></div>
-      </div>
-    </div>
-
-
-
-
-    <div style="display: contents;" v-if="estadoServicio == false && estadoSucces == false"  >
-
-      <div class="notification" style="height: 7rem;" >
-        <div class="tittle-text">
-          <h1 style=" font-family: 'Futura'; font-size: 3rem; font-weight: 500; color: rgb(35, 89, 135);">¿Qué servicio podemos ofrecerte?</h1>
-        </div>
-      </div>
-      
-
-
-
-
-      <div class="services" style="height: 60vh;" v-if="estadoServicio == false && estadoSucces == false">
-      
-
-      <div class="buttons">
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Toma de Muestra')">
-            <img src="../assets/tubo-de-ensayo.png" alt="" />
-          </div>
-          <div class="description-service">
-            <h1>TOMA DE MUESTRA</h1>
-            <h4>Toma de muestras para laboratorio</h4>
-          </div>
-        </div>
-
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Muestra Pendiente')">
-            <img src="../assets/orina-oscura.png" alt="" />
-          </div>
-          <div class="description-service">
-            <h1>MUESTRA PENDIENTE</h1>
-            <h4>Entrega de muestra pendiente</h4>
-          </div>
-        </div>
-
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Consulta')">
-            <img src="../assets/consulta.png" alt="" />
-          </div>
-          <div class="description-service">
-            <h1>CONSULTA</h1>
-            <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
-          </div>
+        <div class="logo-img">
+          <img src="../assets/logo-blanco-amarillo.png" alt="" />
         </div>
       </div>
     </div>
 
+    <div
+      class="services"
+      v-if="estadoServicio == false && estadoSucces == false"
+    >
+      <h1
+        style="
+          font-size: 3.5rem;
+          margin-bottom: 50px;
+          color: rgb(16, 118, 173);
+          font-weight: 700;
+        "
+      >
+        ¿Qué servicio podemos ofrecerte?
+      </h1>
 
+      <div
+        class="services"
+        style="height: 60vh"
+        v-if="estadoServicio == false && estadoSucces == false"
+      >
+        <div class="buttons">
+          <div class="button-square">
+            <div class="circle-button" @click="setServicio('Toma de Muestra')">
+              <img src="../assets/tubo-de-ensayo.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>TOMA DE MUESTRA</h1>
+              <h4>Toma de muestras para laboratorio</h4>
+            </div>
+          </div>
 
-      <img src="../assets/plexus.png" alt="" />
+          <div class="button-square">
+            <div
+              class="circle-button"
+              @click="setServicio('Muestra Pendiente')"
+            >
+              <img src="../assets/orina-oscura.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>MUESTRA PENDIENTE</h1>
+              <h4>Entrega de muestra pendiente</h4>
+            </div>
+          </div>
 
-
-
-
-
-
-      
+          <div class="button-square">
+            <div class="circle-button" @click="setServicio('Consulta')">
+              <img src="../assets/consulta.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>CONSULTA</h1>
+              <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
+            </div>
+          </div>
+        </div>
+        <div class="logo-plexus">
+          <img
+            src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
+            alt=""
+          />
+        </div>
+      </div>
     </div>
-
-
-
-   
   </body>
 
   <div>
@@ -477,7 +510,7 @@ export default {
   border-radius: 15px;
   height: 100px;
   padding: 1em;
-  
+
   background-color: #f3ecec;
   box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
   transition: 300ms ease-in-out;
@@ -502,13 +535,13 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
   color: #000;
   text-align: center;
   position: relative;
   animation: show 5s ease-in-out;
+  transform: translateY(50%);
 }
 
 .tittle-text {
@@ -529,8 +562,7 @@ export default {
 
 .logo-img img {
   width: 100%;
-  height: 100%;
-  transform: scale(1.5);
+  height: 25%;
 }
 
 body {
@@ -552,6 +584,11 @@ body {
   width: 800px;
   height: 800px;
   padding: 5%;
+}
+
+.container img {
+  width: 50%;
+  height: auto;
 }
 
 .buttons-collection {
@@ -656,8 +693,8 @@ button {
 }
 
 button:hover {
-  transform: scale(1.05);
-
+  transform: scale(1.025);
+  margin: 0 25px;
 }
 
 .background-container {
@@ -674,7 +711,7 @@ button:hover {
   height: 99.7435%;
   object-fit: cover;
   filter: blur(0px);
-  /**  
+  /**
    */
 }
 :root {
@@ -707,7 +744,7 @@ button:hover {
 }
 
 .button-square:hover {
-  transform: scale(1.1);
+  transform: scale(1.025);
 }
 
 .circle-button {
@@ -753,5 +790,67 @@ button:hover {
   font-size: 1.2rem;
   color: var(--primary-color-dark);
   text-align: center;
+}
+
+@media screen and (max-width: 1300px) {
+  .circle-button {
+    margin-top: 50px;
+    width: 80%;
+    height: 50%;
+    transform: translateX(10%);
+  }
+  .circle-button img {
+    width: auto;
+    height: 70%;
+  }
+  .description-service h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+    font-weight: 900;
+  }
+
+  .description-service h4 {
+    font-size: 1rem;
+  }
+
+  .logo-img img {
+    width: 100%;
+    height: 35%;
+    margin-top: -50px;
+  }
+  .container img {
+    width: 35%;
+    height: auto;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .circle-button {
+    width: 80%;
+    height: 50%;
+    transform: translateX(10%);
+  }
+  .circle-button img {
+    width: auto;
+    height: 70%;
+  }
+  .description-service h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+    font-weight: 900;
+  }
+
+  .description-service h4 {
+    font-size: 1rem;
+  }
+  .logo-img img {
+    width: 100%;
+    height: 35%;
+    margin-top: -50px;
+  }
+  .container img {
+    width: 35%;
+    height: auto;
+  }
 }
 </style>

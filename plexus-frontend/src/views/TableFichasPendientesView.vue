@@ -20,7 +20,7 @@
       "
     ></div>
     <div class="baby-register">
-      <h2 style="font-size: 3.5rem; color: #fff">Tabla de Fichas</h2>
+      <h2>Tabla de Fichas</h2>
     </div>
     <div class="baby-register" @click="borrarFichas()">
       <button class="button2" style="background-color: #c82b2b; color: #fff">
@@ -358,14 +358,13 @@ export default {
 
 .background-container img {
   width: 100%;
-  min-height: 120vh;
+  min-height: 250vh;
   object-fit: cover;
   /**  
    */
 }
 
 .container {
-  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   margin: 0 auto;
   text-align: center;
@@ -458,6 +457,11 @@ export default {
   padding: 15px 100px;
 }
 
+.baby-register h2 {
+  font-size: 3.5rem;
+  color: rgb(249, 249, 45);
+}
+
 .button2 {
   display: inline-block;
   width: auto;
@@ -525,5 +529,31 @@ export default {
   top: -45%;
   background-color: var(--primary-color-dark);
   transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+@media screen and (max-width: 1300px) {
+  .button2 {
+    display: inline-block;
+    width: 150px;
+    height: 100%;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #090909;
+    padding: 0.45em 1.7em;
+    font-size: 16px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    box-shadow: 3px 3px 6px #c5c5c5, -3px -3px 6px #ffffff;
+  }
+
+  .baby-register {
+    transform: translateX(-35%);
+  }
+  .baby-register h2 {
+    font-size: 2rem;
+  }
 }
 </style>
