@@ -1,7 +1,12 @@
 <template>
   <body>
     <div class="container" v-if="estadoServicio == true">
-      <h1 style="font-size: 3rem; font-weight: 700">SISTEMA DE FICHAS</h1>
+      <h1 style="font-size: 5rem; color: #fff; font-weight: 700">
+        Bienvenidos
+      </h1>
+      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
+        Registra tu nombre
+      </h1>
       <!--<input
         type="text"
         placeholder="Ingrese su nombre"
@@ -16,6 +21,9 @@
         placeholder="Ingrese su nombre"
         v-model="fichaRegistrar.nombre"
       />
+      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
+        Selecciona un tipo de atención
+      </h1>
       <div class="buttons-collection">
         <div class="normal-button">
           <div class="imagen">
@@ -44,7 +52,16 @@
     </div>
 
     <div class="background-container">
-      <img src="../assets/bg-services-plexus.jpg" alt="" />
+      <img
+        src="../assets/bg-gracias.png"
+        v-if="estadoServicio == true"
+        alt=""
+      />
+      <img
+        src="../assets/bg-services.png"
+        v-if="estadoServicio == false"
+        alt=""
+      />
     </div>
 
     <div class="services" v-if="estadoSucces == true" @click="reinicio()">
@@ -56,7 +73,20 @@
       </div>
     </div>
 
-    <div class="services" v-if="estadoServicio == false && estadoSucces == false">
+    <div
+      class="services"
+      v-if="estadoServicio == false && estadoSucces == false"
+    >
+      <h1
+        style="
+          font-size: 3.5rem;
+          margin-bottom: 50px;
+          color: rgb(16, 118, 173);
+          font-weight: 700;
+        "
+      >
+        ¿Qué servicio podemos ofrecerte?
+      </h1>
       <div class="buttons">
         <div class="button-square">
           <div class="circle-button" @click="setServicio('Toma de Muestra')">
@@ -87,6 +117,9 @@
             <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
           </div>
         </div>
+      </div>
+      <div class="logo-plexus">
+        <img src="../assets/plexus.png" alt="" />
       </div>
     </div>
   </body>
@@ -125,7 +158,10 @@ export default {
 
     async postFicha() {
       await axios
-        .post("https://prueba-plexus-backend.serverbb.online/fichas/agregar", this.fichaRegistrar)
+        .post(
+          "https://prueba-plexus-backend.serverbb.online/fichas/agregar",
+          this.fichaRegistrar
+        )
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
@@ -405,6 +441,19 @@ export default {
 <style scoped>
 /**input css */
 
+.logo-plexus {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-plexus img {
+  width: auto;
+  height: 75%;
+}
+
 .input {
   border: none;
   outline: none;
@@ -513,6 +562,7 @@ body {
   border-radius: 50%;
   box-shadow: 0px 0px 10px 0px var(--primary-color-dark);
   background-color: var(--primary-color-dark);
+  border: 2px solid rgb(229, 229, 45);
 }
 
 .normal-button .imagen img {
@@ -526,9 +576,9 @@ body {
   width: 520px;
   height: 100px;
   border-radius: 10px;
-  background-color: var(--primary-color-dark);
-  color: #fff;
-  border: none;
+  background-color: #fff;
+  color: var(--primary-color-dark);
+  border: 2px solid #fff;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -551,6 +601,7 @@ body {
   border-radius: 50%;
   box-shadow: 0px 0px 10px 0px var(--primary-color-dark);
   background-color: var(--primary-color-dark);
+  border: 2px solid rgb(229, 229, 45);
 }
 
 .preferential-button .imagen img {
@@ -564,9 +615,9 @@ body {
   width: 520px;
   height: 100px;
   border-radius: 10px;
-  background-color: var(--primary-color-dark);
-  color: #fff;
-  border: none;
+  background-color: #fff;
+  color: var(--primary-color-dark);
+  border: #fff 2px solid;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -588,7 +639,8 @@ button {
 }
 
 button:hover {
-  background-color: #1565c0; /* Azul oscuro al pasar el mouse */
+  background-color: #fff;
+  transform: scale(1.025); /* Azul oscuro al pasar el mouse */
 }
 
 .background-container {
@@ -604,7 +656,6 @@ button:hover {
   width: 100%;
   height: 110vh;
   object-fit: cover;
-  filter: blur(10px);
   /**  
    */
 }
@@ -616,6 +667,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
 }
 
