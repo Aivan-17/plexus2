@@ -377,7 +377,6 @@ body {
 }
 
 .container {
-  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   margin: 0 auto;
   text-align: center;
