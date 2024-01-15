@@ -1,10 +1,12 @@
 <template>
   <body>
     <div class="container" v-if="estadoServicio == true">
-      <h1 style="font-size: 5rem; color: #fff; font-weight: 700">
+      <h1 style="font-size: 5rem; font-weight: 600; color: #fff">
         Bienvenidos
       </h1>
-      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
+      <br />
+
+      <h1 style="font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76)">
         Registra tu nombre
       </h1>
       <!--<input
@@ -21,9 +23,11 @@
         placeholder="Ingrese su nombre"
         v-model="fichaRegistrar.nombre"
       />
-      <h1 style="font-size: 2rem; font-weight: 700; color: rgb(229, 229, 45)">
+      <br />
+      <h1 style="font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76)">
         Selecciona un tipo de atención
       </h1>
+
       <div class="buttons-collection">
         <div class="normal-button">
           <div class="imagen">
@@ -32,9 +36,14 @@
           <button
             type="button"
             @click="setTipo('Normal')"
-            style="font-weight: 800; font-size: 2.5rem"
+            style="
+              font-weight: 400;
+              font-size: 2.5rem;
+              background-color: #fff;
+              color: rgb(35, 89, 135);
+            "
           >
-            NORMAL
+            Normal
           </button>
         </div>
         <br />
@@ -43,37 +52,56 @@
           <button
             type="button"
             @click="setTipo('Preferencial')"
-            style="font-weight: 800; font-size: 2.5rem"
+            style="
+              font-weight: 400;
+              font-size: 2.5rem;
+              background-color: #fff;
+              color: rgb(35, 89, 135);
+            "
           >
-            PREFERENCIAL
+            Preferencial
           </button>
         </div>
       </div>
+      <br />
+      <img src="../assets/logo-blanco-amarillo.png" alt="" />
     </div>
 
     <div class="background-container">
       <img
-        src="../assets/bg-gracias.png"
+        src="../assets/Gracias y Registro-fondo.png"
         v-if="estadoServicio == true"
+        style=""
         alt=""
       />
       <img
-        src="../assets/bg-services.png"
-        v-if="estadoServicio == false"
+        src="../assets/Servicios-fondo.png"
+        v-if="estadoServicio == false && estadoSucces == false"
+        style="filter: blur(1px)"
+        alt=""
+      />
+      <img
+        src="../assets/Gracias y Registro-fondo.png"
+        v-if="estadoSucces == true"
+        style=""
         alt=""
       />
     </div>
 
-    <div class="services" v-if="estadoSucces == true" @click="reinicio()">
-      <div class="notification">
+    <div
+      class="services"
+      style="width: 80vw"
+      v-if="estadoSucces == true"
+      @click="reinicio()"
+    >
+      <div class="notification" style="width: auto">
         <div class="tittle-text">
-          <h1>Gracias, en un momento te atenderemos</h1>
+          <h1 style="font-size: 4rem; font-weight: 400; color: #fff">
+            Gracias, en un momento te atenderemos
+          </h1>
         </div>
         <div class="logo-img">
-          <img
-            src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
-            alt=""
-          />
+          <img src="../assets/logo-blanco-amarillo.png" alt="" />
         </div>
       </div>
     </div>
@@ -93,42 +121,51 @@
         ¿Qué servicio podemos ofrecerte?
       </h1>
 
-      <div class="buttons">
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Toma de Muestra')">
-            <img src="../assets/tubo-de-ensayo.png" alt="" />
+      <div
+        class="services"
+        style="height: 60vh"
+        v-if="estadoServicio == false && estadoSucces == false"
+      >
+        <div class="buttons">
+          <div class="button-square">
+            <div class="circle-button" @click="setServicio('Toma de Muestra')">
+              <img src="../assets/tubo-de-ensayo.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>TOMA DE MUESTRA</h1>
+              <h4>Toma de muestras para laboratorio</h4>
+            </div>
           </div>
-          <div class="description-service">
-            <h1>TOMA DE MUESTRA</h1>
-            <h4>Toma de muestras para laboratorio</h4>
-          </div>
-        </div>
 
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Muestra Pendiente')">
-            <img src="../assets/orina-oscura.png" alt="" />
+          <div class="button-square">
+            <div
+              class="circle-button"
+              @click="setServicio('Muestra Pendiente')"
+            >
+              <img src="../assets/orina-oscura.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>MUESTRA PENDIENTE</h1>
+              <h4>Entrega de muestra pendiente</h4>
+            </div>
           </div>
-          <div class="description-service">
-            <h1>MUESTRA PENDIENTE</h1>
-            <h4>Entrega de muestra pendiente</h4>
-          </div>
-        </div>
 
-        <div class="button-square">
-          <div class="circle-button" @click="setServicio('Consulta')">
-            <img src="../assets/consulta.png" alt="" />
-          </div>
-          <div class="description-service">
-            <h1>CONSULTA</h1>
-            <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
+          <div class="button-square">
+            <div class="circle-button" @click="setServicio('Consulta')">
+              <img src="../assets/consulta.png" alt="" />
+            </div>
+            <div class="description-service">
+              <h1>CONSULTA</h1>
+              <h4>Realiza cualquier consulta, precios, cotizaciones y demás</h4>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="logo-plexus">
-        <img
-          src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
-          alt=""
-        />
+        <div class="logo-plexus">
+          <img
+            src="../assets/GraI_fica-Complementaria-Modular-01-1-1.png"
+            alt=""
+          />
+        </div>
       </div>
     </div>
   </body>
@@ -157,6 +194,10 @@ export default {
       this.fichaRegistrar.servicio = "";
     },
     setTipo(aux) {
+      if (this.fichaRegistrar.nombre == "") {
+        alert("Ingrese su nombre");
+        return;
+      }
       this.fichaRegistrar.tipo = aux;
       this.estadoServicio = false;
     },
@@ -469,7 +510,8 @@ export default {
   border-radius: 15px;
   height: 100px;
   padding: 1em;
-  background-color: #ccc;
+
+  background-color: #f3ecec;
   box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
   transition: 300ms ease-in-out;
   width: 100%;
@@ -477,9 +519,9 @@ export default {
 }
 
 .input:focus {
-  background-color: white;
-  transform: scale(1.05);
-  box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+  background-color: rgb(240, 229, 229);
+  transform: scale(1.01);
+  box-shadow: 4px 4px 100px #969696, -4px -4px 100px #e4e1e1;
 }
 
 /**end input css */
@@ -493,13 +535,13 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
   color: #000;
   text-align: center;
   position: relative;
   animation: show 5s ease-in-out;
+  transform: translateY(50%);
 }
 
 .tittle-text {
@@ -520,7 +562,7 @@ export default {
 
 .logo-img img {
   width: 100%;
-  height: 100%;
+  height: 25%;
 }
 
 body {
@@ -542,6 +584,11 @@ body {
   width: 800px;
   height: 800px;
   padding: 5%;
+}
+
+.container img {
+  width: 50%;
+  height: auto;
 }
 
 .buttons-collection {
@@ -640,15 +687,14 @@ input {
 button {
   padding: 10px;
   cursor: pointer;
-  background-color: #2196f3; /* Azul */
   color: #fff;
   border: none;
   border-radius: 5px;
 }
 
 button:hover {
-  background-color: #fff;
-  transform: scale(1.025); /* Azul oscuro al pasar el mouse */
+  transform: scale(1.025);
+  margin: 0 25px;
 }
 
 .background-container {
@@ -662,9 +708,10 @@ button:hover {
 
 .background-container img {
   width: 100%;
-  height: 110vh;
+  height: 99.7435%;
   object-fit: cover;
-  /**  
+  filter: blur(0px);
+  /**
    */
 }
 :root {
@@ -745,8 +792,9 @@ button:hover {
   text-align: center;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1300px) {
   .circle-button {
+    margin-top: 50px;
     width: 80%;
     height: 50%;
     transform: translateX(10%);
@@ -763,6 +811,16 @@ button:hover {
 
   .description-service h4 {
     font-size: 1rem;
+  }
+
+  .logo-img img {
+    width: 100%;
+    height: 35%;
+    margin-top: -50px;
+  }
+  .container img {
+    width: 35%;
+    height: auto;
   }
 }
 
@@ -784,6 +842,15 @@ button:hover {
 
   .description-service h4 {
     font-size: 1rem;
+  }
+  .logo-img img {
+    width: 100%;
+    height: 35%;
+    margin-top: -50px;
+  }
+  .container img {
+    width: 35%;
+    height: auto;
   }
 }
 </style>
