@@ -1,5 +1,4 @@
 <template>
-
   <div
     class="say"
     style="
@@ -19,16 +18,14 @@
         justify-content: center;
         align-items: center;
       "
-    >
-     
+    ></div>
+    <div class="baby-register">
+      <h2 style="font-size: 3.5rem; color: #fff">Tabla de Fichas</h2>
     </div>
-    <div class="baby-register"  >
-      <h2>Tabla de Fichas</h2>
-
-    </div>
-    <div class="baby-register"  @click="borrarFichas()">
-
-      <button class="button2" style="background-color: #c82b2b;">Borrar todas las fichas</button>
+    <div class="baby-register" @click="borrarFichas()">
+      <button class="button2" style="background-color: #c82b2b; color: #fff">
+        Borrar todas las fichas
+      </button>
     </div>
 
     <div class="baby-register" @click="actualizarTabla">
@@ -52,11 +49,9 @@
             <th>
               <h1>Opciones</h1>
             </th>
-
-            
           </tr>
         </thead>
-         <tbody>
+        <tbody>
           <tr
             v-for="ficha in fichasTomaMuestra"
             :key="ficha.nombre"
@@ -66,7 +61,7 @@
             <td>{{ ficha.nombre }}</td>
             <td>{{ ficha.tipo }}</td>
             <td>{{ ficha.servicio }}</td>
-         
+
             <td>
               <button
                 class="btn btn-primary"
@@ -87,6 +82,9 @@
       </table>
     </div>
   </body>
+  <div class="background-container">
+    <img src="../assets/bg-gracias.png" alt="" />
+  </div>
   <!--<Loading
     v-model:active="isLoading"
     :can-cancel="false"
@@ -94,21 +92,18 @@
   />-->
 </template>
 <script>
-import { useSound } from '@vueuse/sound'
-import notificationSound from '../assets/audio.mp3'
+import { useSound } from "@vueuse/sound";
+import notificationSound from "../assets/audio.mp3";
 
 import axios from "axios";
 export default {
   setup() {
-    const { play } = useSound(notificationSound)
+    const { play } = useSound(notificationSound);
 
     return {
       play,
-    }
+    };
   },
-
-
-  
 
   computed: {
     fichasTomaMuestra() {
@@ -120,35 +115,34 @@ export default {
 
   data() {
     return {
-
       listFichas: [],
-
     };
   },
 
   methods: {
-    async borrarFichas(){
+    async borrarFichas() {
       //ask for a input text confirmation
       try {
-        var input = prompt("Escriba 'borrar' para confirmar el borrado de todas las fichas", "");
-      if(input == "borrar"){
-        await axios.delete("https://prueba-plexus-backend.serverbb.online/fichas/borrar-todas");
-        alert("Todas las fichas han sido borradas");
-        this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
-        this.listFichas = this.listFichas.data;
-      }else{
-        alert("No se ha borrado ninguna ficha");
-      }
+        var input = prompt(
+          "Escriba 'borrar' para confirmar el borrado de todas las fichas",
+          ""
+        );
+        if (input == "borrar") {
+          await axios.delete(
+            "https://prueba-plexus-backend.serverbb.online/fichas/borrar-todas"
+          );
+          alert("Todas las fichas han sido borradas");
+          this.listFichas = await axios.get(
+            "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+          );
+          this.listFichas = this.listFichas.data;
+        } else {
+          alert("No se ha borrado ninguna ficha");
+        }
       } catch (error) {
         alert("Problema en el borrado de fichas");
       }
-
-
-      
-      
     },
-
-
 
     getColorByEstado(tipo) {
       switch (tipo) {
@@ -163,71 +157,58 @@ export default {
       }
     },
     async actualizarTabla() {
-      this.listFichasAux= this.listFichas;
-      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
+      this.listFichasAux = this.listFichas;
+      this.listFichas = await axios.get(
+        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+      );
       this.listFichas = this.listFichas.data;
 
-
-      
-      if(this.listFichasAux.length < this.listFichas.length){
+      if (this.listFichasAux.length < this.listFichas.length) {
         await this.play();
       }
-
-
-
-
-
-
-
     },
 
     async updateFichaAbandono(idFicha, ficha) {
       console.log(ficha);
-      await axios.post("https://prueba-plexus-backend.serverbb.online/fichas/borrar", ficha);
+      await axios.post(
+        "https://prueba-plexus-backend.serverbb.online/fichas/borrar",
+        ficha
+      );
       alert("Ficha abandonada");
 
-
-
-      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
+      this.listFichas = await axios.get(
+        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+      );
       this.listFichas = this.listFichas.data;
-
     },
-
 
     async updateFichaAtender(idFicha, ficha) {
       console.log(ficha);
-      await axios.post("https://prueba-plexus-backend.serverbb.online/fichas/borrar", ficha);
+      await axios.post(
+        "https://prueba-plexus-backend.serverbb.online/fichas/borrar",
+        ficha
+      );
       alert("Ficha atendida");
 
-
-
-      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
+      this.listFichas = await axios.get(
+        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+      );
       this.listFichas = this.listFichas.data;
-    }
-
-
+    },
   },
 
-
   async mounted() {
-    this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
+    this.listFichas = await axios.get(
+      "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+    );
     this.listFichas = this.listFichas.data;
 
-    
-
-
-
     console.log(this.listFichas);
-
 
     this.intervalId = setInterval(() => {
       this.actualizarTabla();
     }, 7000);
   },
-
-
-
-
 };
 
 /**import StateModalVue from "@/components/modals/StateModal.vue";
@@ -366,6 +347,23 @@ export default {
   --primary-color-dark: rgb(11, 91, 134);
 }
 
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.background-container img {
+  width: 100%;
+  min-height: 120vh;
+  object-fit: cover;
+  /**  
+   */
+}
+
 .container {
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
@@ -474,7 +472,7 @@ export default {
   border-radius: 0.5em;
   background: #e8e8e8;
   border: 1px solid #e8e8e8;
-  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  box-shadow: 3px 3px 6px #c5c5c5, -3px -3px 6px #ffffff;
 }
 
 .button2:active {
