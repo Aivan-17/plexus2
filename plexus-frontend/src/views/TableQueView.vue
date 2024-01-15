@@ -130,9 +130,9 @@ export default {
       try {
         var input = prompt("Escriba 'borrar' para confirmar el borrado de todas las fichas", "");
       if(input == "borrar"){
-        await axios.delete("http://localhost:8080/fichas/borrar-todas");
+        await axios.delete("https://prueba-plexus-backend.serverbb.online/fichas/borrar-todas");
         alert("Todas las fichas han sido borradas");
-        this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+        this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
         this.listFichas = this.listFichas.data;
       }else{
         alert("No se ha borrado ninguna ficha");
@@ -160,7 +160,7 @@ export default {
     },
     async actualizarTabla() {
       this.listFichasAux= this.listFichas;
-      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
       this.listFichas = this.listFichas.data;
 
 
@@ -179,12 +179,12 @@ export default {
 
     async updateFichaAbandono(idFicha, ficha) {
       console.log(ficha);
-      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      await axios.post("https://prueba-plexus-backend.serverbb.online/fichas/borrar", ficha);
       alert("Ficha abandonada");
 
 
 
-      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
       this.listFichas = this.listFichas.data;
 
     },
@@ -192,12 +192,12 @@ export default {
 
     async updateFichaAtender(idFicha, ficha) {
       console.log(ficha);
-      await axios.post("http://localhost:8080/fichas/borrar", ficha);
+      await axios.post("https://prueba-plexus-backend.serverbb.online/fichas/borrar", ficha);
       alert("Ficha atendida");
 
 
 
-      this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+      this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
       this.listFichas = this.listFichas.data;
     }
 
@@ -206,7 +206,7 @@ export default {
 
 
   async mounted() {
-    this.listFichas = await axios.get("http://localhost:8080/fichas/listar");
+    this.listFichas = await axios.get("https://prueba-plexus-backend.serverbb.online/fichas/listar");
     this.listFichas = this.listFichas.data;
 
     

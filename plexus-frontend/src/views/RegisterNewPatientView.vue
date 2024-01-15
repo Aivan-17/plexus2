@@ -125,7 +125,7 @@ export default {
 
     async postFicha() {
       await axios
-        .post("http://localhost:8080/fichas/agregar", this.fichaRegistrar)
+        .post("https://prueba-plexus-backend.serverbb.online/fichas/agregar", this.fichaRegistrar)
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
