@@ -216,6 +216,14 @@ export default {
           console.log(response.status);
           if (response.status === 200) {
             this.estadoSucces = true;
+            //wait 5 seconds and use this.reinicio()
+
+            setTimeout(() => {
+              if (this.estadoSucces == true) {
+                this.reinicio();
+              }
+            }, 5000);
+            
           } else {
             alert("Error al registrar la ficha");
             this.reinicio();
@@ -561,9 +569,10 @@ export default {
 }
 
 .logo-img img {
-  width: 100%;
-  height: 25%;
+  width: 25vw;
+  
 }
+
 
 body {
   display: flex;
