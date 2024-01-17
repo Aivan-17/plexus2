@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div id="body"><div
     class="say"
     style="
       height: 20vh;
@@ -33,6 +33,7 @@
     </div>
   </div>
   <body>
+    
     <div class="cuerpo">
       <table class="container">
         <thead>
@@ -81,10 +82,10 @@
         </tbody>
       </table>
     </div>
-  </body>
-  <div class="background-container">
+  </body></div>
+  <!--<div class="background-container">
     <img src="../assets/bg-gracias.png" alt="" />
-  </div>
+  </div>-->
   <!--<Loading
     v-model:active="isLoading"
     :can-cancel="false"
@@ -362,6 +363,14 @@ export default {
   object-fit: cover;
   /**  
    */
+}
+
+#body{
+  margin: 0; 
+  padding: 0; 
+  height: 100vh; 
+  background: url(../assets/bg-gracias.png) center/cover no-repeat; 
+  overflow: scroll;
 }
 
 .container {

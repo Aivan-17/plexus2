@@ -1,5 +1,5 @@
 <template>
-  <div class="say">
+  <div id="body"><div class="say">
     <div
       class="notes"
       style="
@@ -72,9 +72,10 @@
       </table>
     </div>
   </body>
-  <div class="background-container">
-    <img src="../assets/bg-gracias.png" alt="" />
   </div>
+  <!--<div class="background-container">
+    <img src="../assets/bg-gracias.png" alt="" />
+  </div>-->
   <!--<Loading
     v-model:active="isLoading"
     :can-cancel="false"
@@ -336,11 +337,12 @@ export default {
   --primary-color-dark: rgb(11, 91, 134);
 }
 
-body {
-  min-height: 100vh;
-  height: auto;
-  min-width: 100vw;
-  width: auto;
+#body{
+  margin: 0; 
+  padding: 0; 
+  height: 100vh; 
+  background: url(../assets/bg-gracias.png) center/cover no-repeat; 
+  overflow: scroll;
 }
 
 .say {
