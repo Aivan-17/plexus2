@@ -1,77 +1,78 @@
 <template>
-  <div id="body"><div class="say">
-    <div
-      class="notes"
-      style="
-        flex-direction: column;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
-    ></div>
-    <div class="baby-register">
-      <h2>Tabla de Toma de Muestras</h2>
-    </div>
-    <div class="baby-register" @click="borrarFichas()">
-      <button class="button2" style="background-color: #c82b2b; color: #fff">
-        Borrar todas las fichas
-      </button>
-    </div>
+  <div id="body">
+    <div class="say">
+      <div
+        class="notes"
+        style="
+          flex-direction: column;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      ></div>
+      <div class="baby-register">
+        <h2>Tabla de Toma de Muestras</h2>
+      </div>
+      <div class="baby-register" @click="borrarFichas()">
+        <button class="button2" style="background-color: #c82b2b; color: #fff">
+          Borrar todas las fichas
+        </button>
+      </div>
 
-    <div class="baby-register" @click="actualizarTabla">
-      <button class="button2">Actualizar Tabla</button>
+      <div class="baby-register" @click="actualizarTabla">
+        <button class="button2">Actualizar Tabla</button>
+      </div>
     </div>
-  </div>
-  <body>
-    <div class="cuerpo">
-      <table class="container">
-        <thead>
-          <tr>
-            <th>
-              <h1>Nombre</h1>
-            </th>
-            <th>
-              <h1>Tipo</h1>
-            </th>
-            <th>
-              <h1>Servicio</h1>
-            </th>
-            <th>
-              <h1>Opciones</h1>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="ficha in fichasTomaMuestra"
-            :key="ficha.nombre"
-            :id="ficha.nombre"
-            :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
-          >
-            <td>{{ ficha.nombre }}</td>
-            <td>{{ ficha.tipo }}</td>
-            <td>{{ ficha.servicio }}</td>
+    <body>
+      <div class="cuerpo">
+        <table class="container">
+          <thead>
+            <tr>
+              <th>
+                <h1>Nombre</h1>
+              </th>
+              <th>
+                <h1>Tipo</h1>
+              </th>
+              <th>
+                <h1>Servicio</h1>
+              </th>
+              <th>
+                <h1>Opciones</h1>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="ficha in fichasTomaMuestra"
+              :key="ficha.nombre"
+              :id="ficha.nombre"
+              :style="{ 'background-color': getColorByEstado(ficha.tipo) }"
+            >
+              <td>{{ ficha.nombre }}</td>
+              <td>{{ ficha.tipo }}</td>
+              <td>{{ ficha.servicio }}</td>
 
-            <td>
-              <button
-                class="btn btn-primary"
-                style="background-color: rgb(238, 14, 14)"
-                @click="updateFichaAbandono(ficha.nombre, ficha)"
-              >
-                Abandono
-              </button>
-              <button
-                class="btn btn-primary"
-                @click="updateFichaAtender(ficha.nombre, ficha)"
-              >
-                Atender
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </body>
+              <td>
+                <button
+                  class="btn btn-primary"
+                  style="background-color: rgb(238, 14, 14)"
+                  @click="updateFichaAbandono(ficha.nombre, ficha)"
+                >
+                  Abandono
+                </button>
+                <button
+                  class="btn btn-primary"
+                  @click="updateFichaAtender(ficha.nombre, ficha)"
+                >
+                  Atender
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </body>
   </div>
   <!--<div class="background-container">
     <img src="../assets/bg-gracias.png" alt="" />
@@ -337,11 +338,11 @@ export default {
   --primary-color-dark: rgb(11, 91, 134);
 }
 
-#body{
-  margin: 0; 
-  padding: 0; 
-  height: 100vh; 
-  background: url(../assets/bg-gracias.png) center/cover no-repeat; 
+#body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url(../assets/bg-gracias.png) center/cover no-repeat;
   overflow: scroll;
 }
 
@@ -453,6 +454,10 @@ export default {
   transition-duration: 0.4s;
   transition-property: all;
   transition-timing-function: line;
+}
+
+.container tbody tr td {
+  overflow: auto;
 }
 
 @media (max-width: 800px) {
