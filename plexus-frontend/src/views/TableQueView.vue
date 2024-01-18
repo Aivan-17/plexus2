@@ -22,6 +22,10 @@
       <div class="baby-register" @click="actualizarTabla">
         <button class="button2">Actualizar Tabla</button>
       </div>
+
+      <div class="baby-register" @click="initializeSound()">
+        <button :style="{background: buttonColor}"  class="button2">Sonido</button>
+      </div>
     </div>
     <body>
       <div class="cuerpo">
@@ -92,12 +96,16 @@
 import axios from "axios";
 import { useSound } from "@vueuse/sound";
 import notificationSound from "../assets/audio.mp3";
+import alertSound from "../assets/alert.mp3";
+
+
 export default {
   setup() {
     const { play } = useSound(notificationSound);
+    const {play: playAlert} = useSound(alertSound);
 
     return {
-      play,
+      play, playAlert
     };
   },
   //computed to only mantein fichas that have ficha.servicio== 'Toma de Muestra'
@@ -107,15 +115,35 @@ export default {
         return ficha.servicio == "Muestra Pendiente";
       });
     },
+    
+
+
   },
 
   data() {
     return {
       listFichas: [],
+      listFichasAux: [],
+      buttonColor: '#1076ad',
+
     };
   },
 
   methods: {
+    initializeSound() {
+      if(this.buttonColor == '#1076ad'){
+        this.buttonColor = '#c82b2b';
+        return;
+      }
+      const { play } = useSound("../assets/audio.mp3"); // Adjust the path accordingly
+      const {play: playAlert} = useSound("../assets/alert.mp3"); // Adjust the path accordingly
+      play();
+      playAlert();
+      this.buttonColor = '#1076ad';
+    },
+
+
+
     async borrarFichas() {
       //ask for a input text confirmation
       try {
@@ -159,9 +187,21 @@ export default {
       );
       this.listFichas = this.listFichas.data;
 
-      if (this.listFichasAux.length < this.listFichas.length) {
-        await this.play();
+      //eliminar de listFichas y de listFichasAux las fichas que no tengan servicio 'Muestra Pendiente'
+      this.listFichas = this.listFichas.filter((ficha) => {
+        return ficha.servicio == "Muestra Pendiente";
+      });
+      this.listFichasAux = this.listFichasAux.filter((ficha) => {
+        return ficha.servicio == "Muestra Pendiente";
+      });
+      if(this.buttonColor == '#1076ad'){
+        if (this.listFichasAux.length < this.listFichas.length) {
+          console.log("sonido");
+          await this.play();
+          console.log("sonido");
+        }
       }
+      
     },
 
     async updateFichaAbandono(idFicha, ficha) {
@@ -194,6 +234,14 @@ export default {
   },
 
   async mounted() {
+    if (performance.navigation.type === 1) {
+      // Página recargada, cambiar el color del botón a rojo
+      this.buttonColor = '#c82b2b';
+    }
+    console.log(this.buttonColor);
+
+
+
     this.listFichas = await axios.get(
       "https://prueba-plexus-backend.serverbb.online/fichas/listar"
     );
@@ -203,7 +251,18 @@ export default {
 
     this.intervalId = setInterval(() => {
       this.actualizarTabla();
-    }, 10000);
+    }, 7000);
+
+    this.intervalId2 = setInterval(() => {
+      if(this.fichasTomaMuestra.length > 0){
+        if(this.buttonColor == '#1076ad'){
+          this.playAlert();
+          console.log("alerta");
+        }
+
+      }
+    }, 20000);
+
   },
 };
 
