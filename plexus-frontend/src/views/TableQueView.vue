@@ -55,17 +55,18 @@
 
               <td>
                 <button
-                  class="btn btn-primary"
-                  style="background-color: rgb(238, 14, 14)"
-                  @click="updateFichaAbandono(ficha.nombre, ficha)"
-                >
-                  Abandono
-                </button>
-                <button
+                  style="width: 150px"
                   class="btn btn-primary"
                   @click="updateFichaAtender(ficha.nombre, ficha)"
                 >
                   Atender
+                </button>
+                <button
+                  class="btn btn-primary"
+                  style="background-color: rgb(238, 14, 14); width: 150px"
+                  @click="updateFichaAbandono(ficha.nombre, ficha)"
+                >
+                  X
                 </button>
               </td>
             </tr>
