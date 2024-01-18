@@ -117,7 +117,7 @@ export default {
   computed: {
     fichasTomaMuestra() {
       return this.listFichas.filter((ficha) => {
-        return ficha.servicio !== "Toma de Muestra";
+        return ficha.servicio !== "Muestra Pendiente";
       });
     },
   },

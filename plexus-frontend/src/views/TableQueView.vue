@@ -11,7 +11,7 @@
         "
       ></div>
       <div class="baby-register">
-        <h2>Tabla de Toma de Muestras</h2>
+        <h2>Tabla de Muestras Pendientes</h2>
       </div>
       <div class="baby-register" @click="borrarFichas()">
         <button class="button2" style="background-color: #c82b2b; color: #fff">
@@ -104,7 +104,7 @@ export default {
   computed: {
     fichasTomaMuestra() {
       return this.listFichas.filter((ficha) => {
-        return ficha.servicio == "Toma de Muestra";
+        return ficha.servicio == "Muestra Pendiente";
       });
     },
   },
