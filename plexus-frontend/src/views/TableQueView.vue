@@ -55,7 +55,7 @@
 
               <td>
                 <button
-                  style="width: 75px; padding: 15px 2.5%"
+                  style="width: 150px; padding: 15px 2.5%"
                   class="btn btn-primary"
                   @click="updateFichaAtender(ficha.nombre, ficha)"
                 >

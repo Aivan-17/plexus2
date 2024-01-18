@@ -66,7 +66,7 @@
 
               <td>
                 <button
-                  style="width: 75px; padding: 15px 2.5%"
+                  style="width: 150px; padding: 15px 2.5%"
                   class="btn btn-primary"
                   @click="updateFichaAtender(ficha.nombre, ficha)"
                 >
@@ -78,6 +78,7 @@
                     background-color: rgb(238, 14, 14);
                     width: 75px;
                     padding: 15px 2.5%;
+                    font-weight: 600;
                   "
                   @click="updateFichaAbandono(ficha.nombre, ficha)"
                 >
