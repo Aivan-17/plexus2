@@ -184,6 +184,7 @@
 
 <script>
 import axios from "axios";
+import { apiUrl } from "@/assets/apiConfig";
 export default {
   methods: {
     reinicio() {
@@ -209,7 +210,7 @@ export default {
     async postFicha() {
       await axios
         .post(
-          "https://prueba-plexus-backend.serverbb.online/fichas/agregar",
+          apiUrl+"/fichas/agregar",
           this.fichaRegistrar
         )
         .then((response) => {

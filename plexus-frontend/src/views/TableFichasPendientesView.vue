@@ -108,6 +108,8 @@ import { useSound } from "@vueuse/sound";
 import notificationSound from "../assets/audio.mp3";
 import alertSound from "../assets/alert.mp3";
 import axios from "axios";
+import { apiUrl } from "@/assets/apiConfig";
+
 
 export default {
   setup() {
@@ -145,11 +147,11 @@ export default {
         );
         if (input == "borrar") {
           await axios.delete(
-            "https://prueba-plexus-backend.serverbb.online/fichas/borrar-todas"
+            apiUrl+"/fichas/borrar-todas"
           );
           alert("Todas las fichas han sido borradas");
           this.listFichas = await axios.get(
-            "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+            apiUrl+"/fichas/listar"
           );
           this.listFichas = this.listFichas.data;
         } else {
@@ -191,7 +193,7 @@ export default {
     async actualizarTabla() {
       this.listFichasAux = this.listFichas;
       this.listFichas = await axios.get(
-        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+        apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
       //eliminar de listFichas y de listFichasAux las fichas que  tengan servicio 'Muestra Pendiente'
@@ -215,13 +217,13 @@ export default {
     async updateFichaAbandono(idFicha, ficha) {
       console.log(ficha);
       await axios.post(
-        "https://prueba-plexus-backend.serverbb.online/fichas/borrar",
+        apiUrl+"/fichas/borrar",
         ficha
       );
       alert("Ficha abandonada");
 
       this.listFichas = await axios.get(
-        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+        apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
     },
@@ -229,13 +231,13 @@ export default {
     async updateFichaAtender(idFicha, ficha) {
       console.log(ficha);
       await axios.post(
-        "https://prueba-plexus-backend.serverbb.online/fichas/borrar",
+        apiUrl+"/fichas/borrar",
         ficha
       );
       alert("Ficha atendida");
 
       this.listFichas = await axios.get(
-        "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+        apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
     },
@@ -249,7 +251,7 @@ export default {
     console.log(this.buttonColor);
 
     this.listFichas = await axios.get(
-      "https://prueba-plexus-backend.serverbb.online/fichas/listar"
+      apiUrl+"/fichas/listar"
     );
     this.listFichas = this.listFichas.data;
 
