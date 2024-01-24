@@ -184,7 +184,6 @@
 
 <script>
 import axios from "axios";
-import { apiUrl } from "@/assets/apiConfig";
 export default {
   methods: {
     reinicio() {
@@ -210,7 +209,7 @@ export default {
     async postFicha() {
       await axios
         .post(
-          apiUrl+"/fichas/agregar",
+          this.$apiUrl+"/fichas/agregar",
           this.fichaRegistrar
         )
         .then((response) => {

@@ -108,7 +108,6 @@ import { useSound } from "@vueuse/sound";
 import notificationSound from "../assets/audio.mp3";
 import alertSound from "../assets/alert.mp3";
 import axios from "axios";
-import { apiUrl } from "@/assets/apiConfig";
 
 
 export default {
@@ -147,11 +146,11 @@ export default {
         );
         if (input == "borrar") {
           await axios.delete(
-            apiUrl+"/fichas/borrar-todas"
+            this.$apiUrl+"/fichas/borrar-todas"
           );
           alert("Todas las fichas han sido borradas");
           this.listFichas = await axios.get(
-            apiUrl+"/fichas/listar"
+            this.$apiUrl+"/fichas/listar"
           );
           this.listFichas = this.listFichas.data;
         } else {
@@ -193,7 +192,7 @@ export default {
     async actualizarTabla() {
       this.listFichasAux = this.listFichas;
       this.listFichas = await axios.get(
-        apiUrl+"/fichas/listar"
+        this.$apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
       //eliminar de listFichas y de listFichasAux las fichas que  tengan servicio 'Muestra Pendiente'
@@ -217,13 +216,13 @@ export default {
     async updateFichaAbandono(idFicha, ficha) {
       console.log(ficha);
       await axios.post(
-        apiUrl+"/fichas/borrar",
+        this.$apiUrl+"/fichas/borrar",
         ficha
       );
       alert("Ficha abandonada");
 
       this.listFichas = await axios.get(
-        apiUrl+"/fichas/listar"
+        this.$apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
     },
@@ -231,13 +230,13 @@ export default {
     async updateFichaAtender(idFicha, ficha) {
       console.log(ficha);
       await axios.post(
-        apiUrl+"/fichas/borrar",
+        this.$apiUrl+"/fichas/borrar",
         ficha
       );
       alert("Ficha atendida");
 
       this.listFichas = await axios.get(
-        apiUrl+"/fichas/listar"
+        this.$apiUrl+"/fichas/listar"
       );
       this.listFichas = this.listFichas.data;
     },
@@ -251,7 +250,7 @@ export default {
     console.log(this.buttonColor);
 
     this.listFichas = await axios.get(
-      apiUrl+"/fichas/listar"
+      this.$apiUrl+"/fichas/listar"
     );
     this.listFichas = this.listFichas.data;
 
