@@ -97,7 +97,7 @@
       <div class="notification" style="width: auto">
         <div class="tittle-text">
           <h1 style="font-size: 4rem; font-weight: 400; color: #fff">
-            Gracias, en un momento te atenderemos
+            Gracias, tome asiento por favor, en un momento será atendido
           </h1>
         </div>
         <div class="logo-img">
