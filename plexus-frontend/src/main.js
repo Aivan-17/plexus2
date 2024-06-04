@@ -8,7 +8,7 @@ import router from './router'
 
 const app = createApp(App)
 console.log(import.meta.env)
-const apiUrl = import.meta.env.VUE_APP_API_URL || "https://prueba-plexus-backend.serverbb.online";
+const apiUrl = import.meta.env.VUE_APP_API_URL || "http://192.168.1.122:8080";
 app.config.globalProperties.$apiUrl = apiUrl;
 
 app.use(createPinia())

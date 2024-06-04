@@ -200,6 +200,13 @@ export default {
       }
       this.fichaRegistrar.tipo = aux;
       this.estadoServicio = false;
+
+      setTimeout(() => {
+        if (this.estadoServicio == false) {
+          this.reinicio();
+          return;
+        }
+      }, 15000);
     },
     async setServicio(aux) {
       this.fichaRegistrar.servicio = aux;
