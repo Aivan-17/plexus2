@@ -1,14 +1,13 @@
 <template>
   <body>
     <div class="container" v-if="estadoServicio == true">
-      <h1 style="font-size: 5rem; font-weight: 600; color: #fff">
-        Bienvenidos
-      </h1>
-      <br />
+    
+    
 
-      <h1 style="font-size: 2rem; font-weight: 100; color: rgb(230, 229, 76)">
+      <h1 style="font-size: 5rem; font-weight: 100; color: rgb(230, 229, 76)">
         Registra tu nombre
       </h1>
+      <br />
       <!--<input
         type="text"
         placeholder="Ingrese su nombre"
@@ -132,10 +131,12 @@
               <img src="../assets/tubo-de-ensayo.png" alt="" />
             </div>
             <div class="description-service">
-              <h1>TOMA DE MUESTRA</h1>
+              <h1>ANÁLISIS DE LABORATORIO</h1>
               <h4>Toma de muestras para laboratorio</h4>
             </div>
           </div>
+
+                      <!--
 
           <div class="button-square">
             <div
@@ -149,6 +150,8 @@
               <h4>Entrega de muestra pendiente</h4>
             </div>
           </div>
+                      -->
+
 
           <div class="button-square">
             <div class="circle-button" @click="setServicio('Consulta')">

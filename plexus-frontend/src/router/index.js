@@ -33,11 +33,12 @@ const router = createRouter({
       name: "table-fichas-pendientes",
       component: TableFichasPendientesView,
     },
+    /*
     {
       path: "/table-muestras-pendientes",
       name: "table-que",
       component: TableQueView,
-    },
+    },*/
    
   ],
 });
